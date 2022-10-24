@@ -3,15 +3,16 @@
 
 This project contain solution a challenge
 
-## How to run
+## PreRequirements
+- Docker
+- Python 3.8 or more
 
+## Deployment 
+
+1. Install 'Postgrest' docker-compose up
+2. Create conda enviroment <code>conda enviroment -n fast_api</code>
+3. Activate enviroment <code>conda activate fast_api</code>
+4. Install Package <code>pip install -r requirements.txt</code>
 
 ## 
 
-
-uvicorn main:app --reload
-
-
-http://127.0.0.1:8000/docs#/
-
-http://127.0.0.1:8000/redoc
