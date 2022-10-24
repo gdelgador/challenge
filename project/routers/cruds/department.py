@@ -9,7 +9,8 @@ def get_department_by_id(db: Session, department_id: int):
     return db.query(Department).filter(Department.id == department_id).first()
 
 def create_department(db: Session, department: DepartmentSchema):
-    _department = Department(department=department.department)
+    _count = db.query(Department).count() +1
+    _department = Department(id=_count, department=department.department)
     db.add(_department)
     db.commit()
     db.refresh(_department)

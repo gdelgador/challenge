@@ -22,6 +22,14 @@ async def create_department_service(request: RequestDepartment, db: Session = De
                     code="200",
                     message="Department created successfully").dict(exclude_none=True)
 
+# @router.post("/create/multiple")
+# async def create_departments_service(requests: RequestDepartment, db: Session = Depends(get_db)):
+#     crud.create_department(db, department=request.parameter)
+#     return Response(status="Ok",
+#                     code="200",
+#                     message="Department created successfully").dict(exclude_none=True)
+
+
 @router.get("/")
 async def get_departments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     _departments = crud.get_department(db, skip, limit)

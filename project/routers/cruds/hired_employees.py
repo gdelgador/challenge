@@ -11,7 +11,8 @@ def get_employee_by_id(db: Session, hired_employee_id: int):
     return db.query(HiredEmployee).filter(HiredEmployee.id == hired_employee_id).first()
 
 def create_employee(db: Session, hired_employee: HiredEmployeeSchema):
-    _hired_employee = HiredEmployee(name=hired_employee.name,
+    _hired_employee = HiredEmployee(id=hired_employee.id,
+                                    name=hired_employee.name,
                                     datetime = (datetime.now()).isoformat(), 
                                     department_id = hired_employee.department_id,
                                     job_id = hired_employee.job_id
