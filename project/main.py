@@ -29,6 +29,17 @@ async def root(request:Request):
         
     return templates.TemplateResponse(
         'df_representation.html',
-        {'request': request, 'data': df.to_html()}
+        {'request': request, 'report':'Report1', 'data': df.to_html(index=False)}
+    )
+    
+@app.get("/report2")
+async def root(request:Request):
+    
+    with engine.connect() as conn:
+        df = pd.read_sql_table(table_name='report2',con=conn)
+        
+    return templates.TemplateResponse(
+        'df_representation.html',
+        {'request': request, 'report':'Report2' ,'data': df.to_html(index=False)}
     )
     
