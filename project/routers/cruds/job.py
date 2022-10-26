@@ -10,8 +10,7 @@ def get_job_by_id(db: Session, job_id: int):
     return db.query(Job).filter(Job.id == job_id).first()
 
 def create_job(db: Session, job: JobSchema):
-    _count = db.query(Job).count() +1
-    _job = Job(id=_count,job=job.job)
+    _job = Job(id=job.id,job=job.job)
     db.add(_job)
     db.commit()
     db.refresh(_job)
