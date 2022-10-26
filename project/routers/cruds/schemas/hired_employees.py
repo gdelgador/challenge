@@ -13,7 +13,13 @@ class HiredEmployeeSchema(BaseModel):
     
     class Config:
         orm_mode=True
-        
+    
+class HiredEmployeeSchemaList(BaseModel):
+    parameter: List[HiredEmployeeSchema]
+    
+class RequestHiredEmployeeSchemaList(BaseModel):
+    parameter: HiredEmployeeSchemaList = Field(...)
+    
 class Request(GenericModel, Generic[T]):
     parameter: Optional[T] = Field(...)
 

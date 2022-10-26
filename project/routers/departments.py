@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Path
 from fastapi import Depends
 from .cruds.internal.db_conection import SessionLocal
 from sqlalchemy.orm import Session
-from .cruds.schemas.departments import DepartmentSchema, Request, Response, RequestDepartment
+from .cruds.schemas.departments import DepartmentSchema, Request, Response, RequestDepartment,DepartmentSchemaList
 from .cruds import department  as crud
 
 router = APIRouter()
@@ -22,12 +22,14 @@ async def create_department_service(request: RequestDepartment, db: Session = De
                     code="200",
                     message="Department created successfully").dict(exclude_none=True)
 
-# @router.post("/create/multiple")
-# async def create_departments_service(requests: RequestDepartment, db: Session = Depends(get_db)):
-#     crud.create_department(db, department=request.parameter)
-#     return Response(status="Ok",
-#                     code="200",
-#                     message="Department created successfully").dict(exclude_none=True)
+@router.post("/create/multiple")
+async def create_departments_service(requests: DepartmentSchemaList, db: Session = Depends(get_db)):
+    for request in requests.parameter:
+        crud.create_department(db, department=request)
+    
+    return Response(status="Ok",
+                    code="200",
+                    message="Departments created successfully").dict(exclude_none=True)
 
 
 @router.get("/")
@@ -38,6 +40,7 @@ async def get_departments(skip: int = 0, limit: int = 100, db: Session = Depends
 @router.get("/{department_id}")
 async def get_department(department_id: int, db: Session = Depends(get_db)):
     _department = crud.get_department_by_id(db, department_id)
+    
     return Response(status="Ok", code="200", message="Success fetch data", result=_department)
 
 

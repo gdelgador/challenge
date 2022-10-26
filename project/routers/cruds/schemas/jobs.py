@@ -13,9 +13,15 @@ class JobSchema(BaseModel):
         
 class Request(GenericModel, Generic[T]):
     parameter: Optional[T] = Field(...)
+    
+class JobSchemaList(BaseModel):
+    parameter: List[JobSchema]
 
 class RequestJob(BaseModel):
     parameter: JobSchema = Field(...)
+    
+class RequestJobList(BaseModel):
+    parameter: JobSchemaList = Field(...)
     
 class Response(GenericModel, Generic[T]):
     code: str

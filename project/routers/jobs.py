@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Path
 from fastapi import Depends
 from .cruds.internal.db_conection import SessionLocal
 from sqlalchemy.orm import Session
-from .cruds.schemas.jobs import JobSchema, Request, Response, RequestJob
+from .cruds.schemas.jobs import JobSchema, Request, Response, RequestJob, JobSchemaList
 from .cruds import job as crud
 
 router = APIRouter()
@@ -21,6 +21,16 @@ async def create_job_service(request: RequestJob, db: Session = Depends(get_db))
     return Response(status="Ok",
                     code="200",
                     message="Job created successfully").dict(exclude_none=True)
+
+@router.post("/create/multiple")
+async def create_jobs_service(requests: JobSchemaList, db: Session = Depends(get_db)):
+    for request in requests.parameter:
+        crud.create_department(db, department=request)
+    
+    return Response(status="Ok",
+                    code="200",
+                    message="Jobs created successfully").dict(exclude_none=True)
+
 
 @router.get("/")
 async def get_jobs(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):

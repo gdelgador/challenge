@@ -11,11 +11,17 @@ class DepartmentSchema(BaseModel):
     class Config:
         orm_mode=True
         
+class DepartmentSchemaList(BaseModel):
+    parameter: List[DepartmentSchema]
+        
 class Request(GenericModel, Generic[T]):
     parameter: Optional[T] = Field(...)
 
 class RequestDepartment(BaseModel):
     parameter: DepartmentSchema = Field(...)
+    
+class RequestDepartmentList(BaseModel):
+    parameter: DepartmentSchemaList = Field(...)
     
 class Response(GenericModel, Generic[T]):
     code: str
